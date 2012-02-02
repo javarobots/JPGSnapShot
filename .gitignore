@@ -1,0 +1,5 @@
+build/*
+/nbproject/private
+*~*
+/JPGCamera/nbproject/private/
+dist*
