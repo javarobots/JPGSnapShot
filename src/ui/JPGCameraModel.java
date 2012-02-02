@@ -4,6 +4,7 @@
  */
 package ui;
 
+import gnu.io.SerialPort;
 import java.util.List;
 import java.util.Observable;
 import util.rxtx.RxTxUtilities;
@@ -14,7 +15,8 @@ import util.rxtx.RxTxUtilities;
  */
 class JPGCameraModel extends Observable {
 
-    List<String> mAvailablePorts;
+    private List<String> mAvailablePorts;
+    private SerialPort mSerialPort;
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -25,6 +27,13 @@ class JPGCameraModel extends Observable {
         return mAvailablePorts;
     }
 
+    public SerialPort getSerialPort() {
+        return mSerialPort;
+    }
 
+    public void setSerialPort(SerialPort mSerialPort) {
+        this.mSerialPort = mSerialPort;
+        setChanged();
+    }
 
 }

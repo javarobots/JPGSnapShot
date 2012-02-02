@@ -22,6 +22,8 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class JPGCamera extends javax.swing.JFrame implements Observer {
 
+    private JPGCameraController mController;
+
     /**
     * @param args the command line arguments
     */
@@ -46,6 +48,8 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         model.initModel();
         model.notifyObservers();
 
+        mController = new JPGCameraController(model);
+
     }
 
     /** This method is called from within the constructor to
@@ -63,7 +67,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mTakePictureButton = new javax.swing.JButton();
         mReadFileSizeButton = new javax.swing.JButton();
         mReadFileContentButton = new javax.swing.JButton();
-        mOpenButton = new javax.swing.JButton();
+        mOpenPortButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JPG Camera");
@@ -78,7 +82,12 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
 
         mReadFileContentButton.setText("Read File Content");
 
-        mOpenButton.setText("Open");
+        mOpenPortButton.setText("Open");
+        mOpenPortButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mOpenPortButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +101,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mComPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mOpenButton))
+                        .addComponent(mOpenPortButton))
                     .addComponent(mResetButton)
                     .addComponent(mTakePictureButton)
                     .addComponent(mReadFileSizeButton)
@@ -109,7 +118,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mComPortLabel)
                     .addComponent(mComPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mOpenButton))
+                    .addComponent(mOpenPortButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mResetButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -124,12 +133,16 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mOpenPortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mOpenPortButtonActionPerformed
+        mController.openComPort(mComPortComboBox.getSelectedItem().toString());
+    }//GEN-LAST:event_mOpenPortButtonActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox mComPortComboBox;
     private javax.swing.JLabel mComPortLabel;
-    private javax.swing.JButton mOpenButton;
+    private javax.swing.JButton mOpenPortButton;
     private javax.swing.JButton mReadFileContentButton;
     private javax.swing.JButton mReadFileSizeButton;
     private javax.swing.JButton mResetButton;
