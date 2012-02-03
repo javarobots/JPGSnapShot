@@ -22,6 +22,7 @@ public class CommandHandler {
     private final byte[] mRead = {0x56,0x00,0x32,0x0C,0x00,0x0A,0x00,0x00};
 
     private SerialPort mPort;
+    private OutputStream mOutStream;
 
     public CommandHandler(SerialPort port){
         mPort = port;
@@ -31,10 +32,16 @@ public class CommandHandler {
         try{
             switch(command){
                 case RESET:
-                    OutputStream outStream = mPort.getOutputStream();
-                    outStream.write(mReset);
+                    if (mOutStream == null){
+                        mOutStream = mPort.getOutputStream();
+                    }
+                    mOutStream.write(mReset);
                     break;
                 case TAKE:
+                    if (mOutStream == null){
+                        mOutStream = mPort.getOutputStream();
+                    }
+                    mOutStream.write(mTake);
                     break;
                 case SIZE:
                     break;

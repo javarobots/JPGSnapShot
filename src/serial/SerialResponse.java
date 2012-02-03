@@ -26,18 +26,21 @@ public class SerialResponse implements Runnable {
     @Override
     public void run() {
         InputStream inputStream = null;
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[8];
         int bytesRead;
         try {
             inputStream = mPort.getInputStream();
             while (!mStop){
                 bytesRead = inputStream.read(buffer);
-                while (bytesRead > 0){
-                    System.out.println("Something read");
+                if (bytesRead > 0){
+                    System.out.print(new String(buffer,0,bytesRead));
                     bytesRead = inputStream.read(buffer);
+                } else {
+                    System.out.println("Nothing read");
                 }
+                Thread.sleep(5);
             }
-        } catch (IOException ex) {
+        } catch (InterruptedException | IOException ex) {
             Logger.getLogger(SerialResponse.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

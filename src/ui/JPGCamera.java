@@ -71,6 +71,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         });
 
         mTakePictureButton.setText("Take Picture");
+        mTakePictureButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mTakePictureButtonActionPerformed(evt);
+            }
+        });
 
         mReadFileSizeButton.setText("Read File Size");
 
@@ -134,6 +139,10 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     private void mResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mResetButtonActionPerformed
         mController.resetCamera();
     }//GEN-LAST:event_mResetButtonActionPerformed
+
+    private void mTakePictureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mTakePictureButtonActionPerformed
+        mController.takePicture();
+    }//GEN-LAST:event_mTakePictureButtonActionPerformed
 
 
 

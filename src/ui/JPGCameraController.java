@@ -1,10 +1,6 @@
 package ui;
 
-import java.util.TooManyListenersException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import serial.CommandHandler.CAMERA_COMMAND;
-import serial.ResponseReader;
 import util.rxtx.RxTxUtilities;
 
 /**
@@ -20,16 +16,15 @@ class JPGCameraController {
     }
 
     public void openComPort(String portName){
-//        try {
-            mModel.setSerialPort(RxTxUtilities.openPortByName(portName, 38400));
-//            mModel.getSerialPort().addEventListener(new ResponseReader());
-//        } catch (TooManyListenersException ex) {
-//            Logger.getLogger(JPGCameraController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        mModel.setSerialPort(RxTxUtilities.openPortByName(portName, 38400));
     }
 
     void resetCamera() {
         mModel.getCommandHandler().sendCommand(CAMERA_COMMAND.RESET);
+    }
+
+    void takePicture() {
+        mModel.getCommandHandler().sendCommand(CAMERA_COMMAND.TAKE);
     }
 
 }
