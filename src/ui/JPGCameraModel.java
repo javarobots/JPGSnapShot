@@ -7,6 +7,8 @@ package ui;
 import gnu.io.SerialPort;
 import java.util.List;
 import java.util.Observable;
+import serial.CommandHandler;
+import serial.SerialResponse;
 import util.rxtx.RxTxUtilities;
 
 /**
@@ -17,6 +19,8 @@ class JPGCameraModel extends Observable {
 
     private List<String> mAvailablePorts;
     private SerialPort mSerialPort;
+    private CommandHandler mCommandHandler;
+    private SerialResponse mReader;
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -31,9 +35,16 @@ class JPGCameraModel extends Observable {
         return mSerialPort;
     }
 
-    public void setSerialPort(SerialPort mSerialPort) {
-        this.mSerialPort = mSerialPort;
+    public void setSerialPort(SerialPort serialPort) {
+        mSerialPort = serialPort;
+        mCommandHandler = new CommandHandler(mSerialPort);
+        mReader = new SerialResponse(serialPort);
+        Thread t = new Thread(mReader);
+        t.start();
         setChanged();
     }
 
+    public CommandHandler getCommandHandler() {
+        return mCommandHandler;
+    }
 }

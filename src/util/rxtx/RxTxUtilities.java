@@ -40,7 +40,6 @@ public class RxTxUtilities {
             ComponentPosition.centerFrame(dialog);
             dialog.setVisible(true);
         }
-        System.out.println(name + " opened.");
         return port;
     }
 

@@ -5,6 +5,8 @@
 package serial;
 
 import gnu.io.SerialPort;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Handles sending commands from the serial port
@@ -26,15 +28,21 @@ public class CommandHandler {
     }
 
     public void sendCommand(CAMERA_COMMAND command){
-        switch(command){
-            case RESET:
-                break;
-            case TAKE:
-                break;
-            case SIZE:
-                break;
-            case READ:
-                break;
+        try{
+            switch(command){
+                case RESET:
+                    OutputStream outStream = mPort.getOutputStream();
+                    outStream.write(mReset);
+                    break;
+                case TAKE:
+                    break;
+                case SIZE:
+                    break;
+                case READ:
+                    break;
+            }
+        } catch (IOException ex){
+            System.out.println("IO Exception");
         }
     }
 

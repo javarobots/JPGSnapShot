@@ -1,14 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * JPGCamera.java
- *
- * Created on Jan 31, 2012, 7:42:40 PM
- */
-
 package ui;
 
 import commonutilities.swing.ComponentPosition;
@@ -75,6 +64,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mComPortLabel.setText("COM Port:");
 
         mResetButton.setText("Reset");
+        mResetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mResetButtonActionPerformed(evt);
+            }
+        });
 
         mTakePictureButton.setText("Take Picture");
 
@@ -136,6 +130,10 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     private void mOpenPortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mOpenPortButtonActionPerformed
         mController.openComPort(mComPortComboBox.getSelectedItem().toString());
     }//GEN-LAST:event_mOpenPortButtonActionPerformed
+
+    private void mResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mResetButtonActionPerformed
+        mController.resetCamera();
+    }//GEN-LAST:event_mResetButtonActionPerformed
 
 
 
