@@ -10,16 +10,16 @@ void setup(){
   spriteSerial.begin(38400);  
 }
 
-void loop(){
+void loop(){  
   //See if data is available from PC
   if (Serial.available() > 0){
    while (Serial.available() > 0){
-    Serial.write(Serial.read());
+    spriteSerial.write(Serial.read());
    }
   }
-  //if (spriteSerial.available() > 0){
-   //while (spriteSerial.available() > 0){
-    //Serial.write(spriteSerial.read());
-   //} 
-  //}
+  if (spriteSerial.available() > 0){
+   while (spriteSerial.available() > 0){
+    Serial.write(spriteSerial.read());
+   } 
+  }
 }
