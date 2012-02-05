@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package serial;
 
 import gnu.io.SerialPort;
@@ -18,36 +14,35 @@ public class SerialResponse implements Runnable {
 
     private SerialPort mPort;
     private boolean mStop = false;
+    private int mExpectedResponse;
 
-    public SerialResponse(SerialPort port){
+    public SerialResponse(SerialPort port, int expectedResponseSize){
         mPort = port;
+        mExpectedResponse = expectedResponseSize;
     }
 
     @Override
     public void run() {
-        InputStream inputStream = null;
-        byte[] buffer = new byte[8];
-        int bytesRead;
         try {
+            InputStream inputStream = null;
+            byte[] buffer = new byte[96];
+            int bytesRead;
+            int totalBytes = 0;
             inputStream = mPort.getInputStream();
             while (!mStop){
                 bytesRead = inputStream.read(buffer);
+                totalBytes += bytesRead;
                 if (bytesRead > 0){
                     System.out.print(new String(buffer,0,bytesRead));
-                    bytesRead = inputStream.read(buffer);
-                } else {
-                    System.out.println("Nothing read");
+                    if (totalBytes == mExpectedResponse){
+                        System.out.println("Stoping response reader.");
+                        mStop = true;
+                    }
                 }
-                Thread.sleep(5);
             }
-        } catch (InterruptedException | IOException ex) {
+            inputStream.close();
+        } catch (IOException ex) {
             Logger.getLogger(SerialResponse.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException ex) {
-                Logger.getLogger(SerialResponse.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
