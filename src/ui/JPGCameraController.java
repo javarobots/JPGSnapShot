@@ -1,6 +1,6 @@
 package ui;
 
-import serial.CommandHandler.CAMERA_COMMAND;
+import serial.CameraCommand;
 import util.rxtx.RxTxUtilities;
 
 /**
@@ -20,11 +20,11 @@ class JPGCameraController {
     }
 
     void resetCamera() {
-        mModel.getCommandHandler().sendCommand(CAMERA_COMMAND.RESET);
+        mModel.getCommandHandler().sendCommand(CameraCommand.RESET);
     }
 
     void takePicture() {
-        mModel.getCommandHandler().sendCommand(CAMERA_COMMAND.TAKE);
+        mModel.getCommandHandler().sendCommand(CameraCommand.TAKE);
     }
 
 }
