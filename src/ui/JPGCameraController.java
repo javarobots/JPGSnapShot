@@ -27,4 +27,8 @@ class JPGCameraController {
         mModel.getCommandHandler().sendCommand(CameraCommand.TAKE);
     }
 
+    void getImageSize() {
+        mModel.getCommandHandler().sendCommand(CameraCommand.SIZE);
+    }
+
 }

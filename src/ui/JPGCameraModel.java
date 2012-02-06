@@ -4,18 +4,18 @@ import gnu.io.SerialPort;
 import java.util.List;
 import java.util.Observable;
 import serial.CommandHandler;
-import serial.SerialResponse;
 import util.rxtx.RxTxUtilities;
 
 /**
  *
  * @author Parham
  */
-class JPGCameraModel extends Observable {
+public class JPGCameraModel extends Observable {
 
     private List<String> mAvailablePorts;
     private SerialPort mSerialPort;
     private CommandHandler mCommandHandler;
+    private int mFileSizeToRead;
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -32,11 +32,21 @@ class JPGCameraModel extends Observable {
 
     public void setSerialPort(SerialPort serialPort) {
         mSerialPort = serialPort;
-        mCommandHandler = new CommandHandler(mSerialPort);
+        mCommandHandler = new CommandHandler(mSerialPort,this);
         setChanged();
     }
 
     public CommandHandler getCommandHandler() {
         return mCommandHandler;
     }
+
+    public int getFileSizeToRead() {
+        return mFileSizeToRead;
+    }
+
+    public void setFileSizeToRead(int fileSizeToRead) {
+        mFileSizeToRead = fileSizeToRead;
+    }
+
+
 }
