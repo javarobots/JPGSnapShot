@@ -85,6 +85,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         });
 
         mReadFileContentButton.setText("Read File Content");
+        mReadFileContentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mReadFileContentButtonActionPerformed(evt);
+            }
+        });
 
         mOpenPortButton.setText("Open");
         mOpenPortButton.addActionListener(new java.awt.event.ActionListener() {
@@ -152,6 +157,10 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     private void mReadFileSizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mReadFileSizeButtonActionPerformed
         mController.getImageSize();
     }//GEN-LAST:event_mReadFileSizeButtonActionPerformed
+
+    private void mReadFileContentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mReadFileContentButtonActionPerformed
+        mController.readImage();
+    }//GEN-LAST:event_mReadFileContentButtonActionPerformed
 
 
 

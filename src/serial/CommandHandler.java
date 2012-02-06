@@ -40,7 +40,19 @@ public class CommandHandler {
 
                 //Correct the command here
 
-                mOutStream.write(command.getCommand());
+                int mh = mModel.getFileSizeToRead() / 256;
+                int ml = mModel.getFileSizeToRead() % 256;
+                byte[] modifiedCommand = new byte[command.getCommand().length + 4];
+                for (int i = 0; i < command.getCommand().length; i++){
+                    modifiedCommand[i] = command.getCommand()[i];
+                }
+                modifiedCommand[modifiedCommand.length - 4] = (byte)mh;
+                modifiedCommand[modifiedCommand.length - 3] = (byte)ml;
+                modifiedCommand[modifiedCommand.length - 2] = 0x00;
+                modifiedCommand[modifiedCommand.length - 4] = 0x0A;
+
+
+                mOutStream.write(modifiedCommand);
             } else {
                 BasicSerialResponse response = new BasicSerialResponse(mPort, command);
                 Thread t = new Thread(response);
