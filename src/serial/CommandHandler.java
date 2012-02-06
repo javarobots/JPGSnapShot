@@ -38,8 +38,7 @@ public class CommandHandler {
                 Thread t = new Thread(response);
                 t.start();
 
-                //Correct the command here
-
+                //Update the basic command with file size and interval
                 int mh = mModel.getFileSizeToRead() / 256;
                 int ml = mModel.getFileSizeToRead() % 256;
                 byte[] modifiedCommand = new byte[command.getCommand().length + 4];
@@ -49,8 +48,7 @@ public class CommandHandler {
                 modifiedCommand[modifiedCommand.length - 4] = (byte)mh;
                 modifiedCommand[modifiedCommand.length - 3] = (byte)ml;
                 modifiedCommand[modifiedCommand.length - 2] = 0x00;
-                modifiedCommand[modifiedCommand.length - 4] = 0x0A;
-
+                modifiedCommand[modifiedCommand.length - 1] = 0x0A;
 
                 mOutStream.write(modifiedCommand);
             } else {
