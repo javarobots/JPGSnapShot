@@ -1,9 +1,14 @@
 package ui;
 
 import gnu.io.SerialPort;
+import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
+import java.util.TooManyListenersException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import serial.CommandHandler;
+import serial.SerialDataListener;
 import util.rxtx.RxTxUtilities;
 
 /**
@@ -31,9 +36,14 @@ public class JPGCameraModel extends Observable {
     }
 
     public void setSerialPort(SerialPort serialPort) {
-        mSerialPort = serialPort;
-        mCommandHandler = new CommandHandler(mSerialPort,this);
-        setChanged();
+        try {
+            mSerialPort = serialPort;
+            mCommandHandler = new CommandHandler(mSerialPort,this);
+            mSerialPort.notifyOnDataAvailable(true);
+            setChanged();
+        } catch (TooManyListenersException | IOException ex) {
+            Logger.getLogger(JPGCameraModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public CommandHandler getCommandHandler() {
