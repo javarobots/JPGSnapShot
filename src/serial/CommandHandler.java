@@ -22,12 +22,24 @@ public class CommandHandler {
     private JPGCameraModel mModel;
     private byte[] buffer = new byte[1024];
     private CameraCommand mCurrentCommand;
+    private ImageData mImageData;
+
+    //Image properties
     private int mFileSize = 0;
+    private boolean mEOF = false;
+    private int mReadHeaderCount = 0;
+    private int mFileReadIndex = 0;
+
+    //Comparison arrays
+    private ByteComparisonArray mReadCompareArray = new ByteComparisonArray(CameraCommand.READ.getExpectedReturnSize());
+    private ByteComparisonArray mEOFComparator = new ByteComparisonArray(2);
+
 
     public CommandHandler(SerialPort port, JPGCameraModel model) throws IOException, TooManyListenersException{
         mPort = port;
         mPort.addEventListener(new SerialDataListener(port.getInputStream()));
         mModel = model;
+        mImageData = new ImageData();
     }
 
     public void sendCommand(CameraCommand command){
@@ -36,9 +48,44 @@ public class CommandHandler {
                 mOutStream = mPort.getOutputStream();
             }
             mCurrentCommand = command;
-            mOutStream.write(command.getCommand());
             if (command == CameraCommand.READ){
-                //Continue sending until EOF
+                //Build command if file size has been obtained
+                if (mFileSize != 0){
+                    byte[] modifiedCommand = new byte[command.getCommand().length + 8];
+                    System.arraycopy(command.getCommand(), 0, modifiedCommand, 0, command.getCommand().length);
+
+                    //Determine read address
+                    int addressToRead = mImageData.getNextReadAddress();
+                    System.out.println("Read address: " + addressToRead);
+                    int addressHighByte = addressToRead / 256;
+                    int addressLowByte = addressToRead % 256;
+                    modifiedCommand[8] = (byte)addressHighByte;
+                    modifiedCommand[9] = (byte)addressLowByte;
+
+                    //Two pad bytes
+                    modifiedCommand[10] = (byte)0x00;
+                    modifiedCommand[11] = (byte)0x00;
+
+                    //File size
+                    int lengthHighByte = mFileSize / 256;
+                    int lengthLowByte = mFileSize % 256;
+                    modifiedCommand[12] = (byte) lengthHighByte;
+                    modifiedCommand[13] = (byte) lengthLowByte;
+
+                    //Interval time (two byte value * 0.01ms)
+                    modifiedCommand[14] = (byte)0x00;
+                    modifiedCommand[15] = (byte)0x0A;
+
+                    mReadHeaderCount = 0;
+
+                    mOutStream.write(modifiedCommand);
+                } else {
+                    System.out.println("File size has not been read");
+                }
+
+            //All other commands
+            } else {
+                mOutStream.write(command.getCommand());
             }
         } catch (IOException ex) {
             Logger.getLogger(CommandHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,16 +104,15 @@ public class CommandHandler {
         @Override
         public void serialEvent(SerialPortEvent spe) {
             try {
-                System.out.println("Processing command: " + mCurrentCommand.getName());
                 int bytesRead = mInStream.read(buffer);
-                ByteComparisonArray compareArray;
+                ByteComparisonArray compareArray = new ByteComparisonArray(mCurrentCommand.getExpectedReturnSize());
                 while(bytesRead > 0){
+                    //Get size command
                     if (mCurrentCommand == CameraCommand.SIZE){
-                        compareArray = new ByteComparisonArray(mCurrentCommand.getExpectedReturnSize());
                         for (int i = 0; i < bytesRead; i++){
                             compareArray.addByte(buffer[i]);
                             if (compareArray.compareArray(mCurrentCommand.getExpectedResponse())){
-                                System.out.println("Command Sucessful");
+                                System.out.println("Size command sucessful");
                             }
                             if (i == 7){
                                 mFileSize = (buffer[i] & 0xFF) * 256;
@@ -75,20 +121,42 @@ public class CommandHandler {
                             }
                         }
                         System.out.println("Image size: " + mFileSize);
-                    } else if (mCurrentCommand == CameraCommand.READ){
 
+                    //Read image command
+                    } else if (mCurrentCommand == CameraCommand.READ){
+                        //Do comparisons for EOF  and end of message here
+                        for (int i = 0; i < bytesRead; i++){
+                            mReadCompareArray.addByte(buffer[i]);
+                            mEOFComparator.addByte(buffer[i]);
+                            mImageData.addToTmpImageData(buffer[i]);
+                            if (mReadCompareArray.compareArray(mCurrentCommand.getExpectedResponse())){
+                                System.out.println("Read header " + ++mReadHeaderCount + " found");
+                            }
+                            if (mEOFComparator.compareArray(new byte[]{(byte)0xFF,(byte)0xD9})){
+                                System.out.println("EOF found");
+                                mEOF = true;
+                            }
+                            if (mReadHeaderCount == 2){
+                                mImageData.processTempImageData();
+                                mReadHeaderCount = 0;
+                            }
+                        }
+
+
+                    //All other commands
                     } else {
-                        compareArray = new ByteComparisonArray(mCurrentCommand.getExpectedReturnSize());
                         for (int i = 0; i < bytesRead; i++){
                             compareArray.addByte(buffer[i]);
                             if (compareArray.compareArray(mCurrentCommand.getExpectedResponse())){
-                                System.out.println("Command Sucessful");
+                                if (mCurrentCommand == CameraCommand.RESET){
+                                    mFileSize = 0;
+                                }
+                                System.out.println(mCurrentCommand.getName() + " command sucessful");
                             }
                         }
                     }
 
-                    //Ouput the result to the console
-                    System.out.print(new String(buffer,0,bytesRead));
+                    //Read data stream again
                     bytesRead = mInStream.read(buffer);
                 }
             } catch (IOException ex) {

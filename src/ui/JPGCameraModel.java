@@ -8,7 +8,6 @@ import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import serial.CommandHandler;
-import serial.SerialDataListener;
 import util.rxtx.RxTxUtilities;
 
 /**
