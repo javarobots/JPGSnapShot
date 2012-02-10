@@ -10,6 +10,7 @@ import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ui.JPGCameraModel;
+import ui.ShowImageWorker;
 
 /**
  * Handles sending commands to the LinkSprite camera
@@ -42,6 +43,8 @@ public class CommandHandler {
             mCurrentCommand = command;
             if (mCurrentCommand == CameraCommand.READ){
                 mImageData.clearImageData();
+                ShowImageWorker worker = new ShowImageWorker(mImageData);
+                worker.execute();
             }
             mOutStream.write(command.getCommand());
         } catch (IOException ex) {
@@ -72,6 +75,7 @@ public class CommandHandler {
                         String[] splitString = responseString.split(" ");
                         splitString = splitString[1].split("\r");
                         mFileSize = Integer.parseInt(splitString[0]);
+                        System.out.println("File size: " + mFileSize);
                     } else if (mCurrentCommand == CameraCommand.READ){
                         for (int i = 0; i < bytesRead; i++){
                             mImageData.addImageData(buffer[i]);
@@ -85,6 +89,7 @@ public class CommandHandler {
                 }
                 if (mCurrentCommand == CameraCommand.READ){
                     System.out.println("Finished reading image data");
+                    mImageData.finishedReadingData(true);
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(CommandHandler.class.getName()).log(Level.SEVERE, null, ex);

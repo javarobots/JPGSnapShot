@@ -14,7 +14,7 @@ import java.util.List;
 public class ImageData {
 
     private List<Byte> mImageData = new ArrayList<>();
-    private boolean mFinshedReadingData = false;
+    private boolean mFinishedReadingData = false;
 
     public void addImageData(byte b){
         mImageData.add(b);
@@ -22,14 +22,15 @@ public class ImageData {
 
     public void clearImageData(){
         mImageData.clear();
+        mFinishedReadingData = false;
     }
 
     public void finishedReadingData(boolean b){
-        mFinshedReadingData = b;
+        mFinishedReadingData = b;
     }
 
     public boolean isFinishedReadingData(){
-        return mFinshedReadingData;
+        return mFinishedReadingData;
     }
 
 }
