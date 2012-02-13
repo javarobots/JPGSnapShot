@@ -6,10 +6,11 @@ package serial;
  */
 public enum CameraCommand {
 
-    RESET("Reset Camera", new byte[]{0x0A}),
-    TAKE("Take Picture", new byte[]{0x14}),
-    SIZE("Get Image Size", new byte[]{0x1E}),
-    READ("Read Image", new byte[]{0x28});
+    RESET("Reset Camera", new byte[]{0x24,0x52,0x53,0x54}),
+    TAKE("Take Picture", new byte[]{0x24,0x53,0x4E,0x50}),
+    SIZE("Get Image Size", new byte[]{0x24,0x53,0x49,0x5A}),
+    READ("Read Image", new byte[]{0x28}),
+    VERSION("Get Version", new byte[]{0x24,0x56,0x45,0x52});
 
     private String mDescription;
     private byte[] mCommand;
