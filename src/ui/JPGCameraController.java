@@ -35,4 +35,12 @@ class JPGCameraController {
         mModel.getCommandHandler().sendCommand(CameraCommand.VERSION);
     }
 
+    void getDimension() {
+        mModel.getCommandHandler().sendCommand(CameraCommand.DIMENSION);
+    }
+
+    void readImageData() {
+        mModel.getCommandHandler().sendCommand(CameraCommand.READ);
+    }
+
 }

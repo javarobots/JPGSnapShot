@@ -50,6 +50,8 @@ public class CommandHandler {
     private class SerialDataListener implements SerialPortEventListener {
 
         private InputStream mInStream;
+        private int byteIndex = 0;
+        private int mFileSize = 0;
 
         public SerialDataListener(InputStream inStream){
             mInStream = inStream;
@@ -60,19 +62,33 @@ public class CommandHandler {
             try {
                 //Delay to ensure the response buffer can fill
                 System.out.println(mCurrentCommand.getName() + " command");
-                Thread.sleep(100);
+                Thread.sleep(10);
                 int bytesRead = mInStream.read(buffer);
                 while(bytesRead > 0){
                     if (mCurrentCommand == CameraCommand.SIZE){
-                        System.out.println("Image size");
+                        String[] splitString = (new String(buffer,0,bytesRead)).split(" ");
+                        mFileSize = Integer.parseInt(splitString[0]);
+                        System.out.print(new String(buffer,0,bytesRead));
                     } else if (mCurrentCommand == CameraCommand.READ){
-                        System.out.println("Snap image");
+                        if (mFileSize != 0){
+                            for (int i = 0; i < bytesRead; i++){
+                                mFileSize--;
+                                System.out.print(buffer[i] + ",");
+                                if (++byteIndex == 40){
+                                    System.out.println("\nBytes remaining: " + mFileSize);
+                                    byteIndex = 0;
+                                }
+                            }
+                        }
                     } else if (mCurrentCommand == CameraCommand.RESET){
-                        System.out.println("Camera reset");
+                        System.out.print(new String(buffer,0,bytesRead));
                     } else if (mCurrentCommand == CameraCommand.VERSION){
-                        System.out.println("Camera version");
+                        System.out.print(new String(buffer,0,bytesRead));
+                    } else if (mCurrentCommand == CameraCommand.TAKE){
+                        System.out.print(new String(buffer,0,bytesRead));
+                    } else if (mCurrentCommand == CameraCommand.DIMENSION){
+                        System.out.print(new String(buffer,0,bytesRead));
                     }
-                    System.out.println(new String(buffer,0,bytesRead));
                     bytesRead = mInStream.read(buffer);
                 }
             } catch (InterruptedException ex) {

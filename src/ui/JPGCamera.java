@@ -57,6 +57,9 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mReadFileSizeButton = new javax.swing.JButton();
         mReadFileContentButton = new javax.swing.JButton();
         mOpenPortButton = new javax.swing.JButton();
+        mGetImageDimensionButton = new javax.swing.JButton();
+        mReadImageDataButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JPG Camera");
@@ -98,6 +101,22 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
             }
         });
 
+        mGetImageDimensionButton.setText("Image Dimension");
+        mGetImageDimensionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mGetImageDimensionButtonActionPerformed(evt);
+            }
+        });
+
+        mReadImageDataButton.setText("Read Image Data");
+        mReadImageDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mReadImageDataButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,29 +133,43 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                     .addComponent(mResetButton)
                     .addComponent(mTakePictureButton)
                     .addComponent(mReadFileSizeButton)
-                    .addComponent(mReadFileContentButton))
-                .addContainerGap(246, Short.MAX_VALUE))
+                    .addComponent(mReadFileContentButton)
+                    .addComponent(mGetImageDimensionButton)
+                    .addComponent(mReadImageDataButton))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mReadFileContentButton, mReadFileSizeButton, mResetButton, mTakePictureButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mGetImageDimensionButton, mReadFileContentButton, mReadFileSizeButton, mReadImageDataButton, mResetButton, mTakePictureButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mComPortLabel)
-                    .addComponent(mComPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mOpenPortButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mResetButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mTakePictureButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mReadFileSizeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mReadFileContentButton)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(mComPortLabel)
+                            .addComponent(mComPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mOpenPortButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mResetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mTakePictureButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mReadFileSizeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mReadFileContentButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mGetImageDimensionButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mReadImageDataButton)
+                        .addGap(0, 268, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -162,14 +195,25 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mController.getVersion();
     }//GEN-LAST:event_mReadFileContentButtonActionPerformed
 
+    private void mGetImageDimensionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mGetImageDimensionButtonActionPerformed
+        mController.getDimension();
+    }//GEN-LAST:event_mGetImageDimensionButtonActionPerformed
+
+    private void mReadImageDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mReadImageDataButtonActionPerformed
+        mController.readImageData();
+    }//GEN-LAST:event_mReadImageDataButtonActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JComboBox mComPortComboBox;
     private javax.swing.JLabel mComPortLabel;
+    private javax.swing.JButton mGetImageDimensionButton;
     private javax.swing.JButton mOpenPortButton;
     private javax.swing.JButton mReadFileContentButton;
     private javax.swing.JButton mReadFileSizeButton;
+    private javax.swing.JButton mReadImageDataButton;
     private javax.swing.JButton mResetButton;
     private javax.swing.JButton mTakePictureButton;
     // End of variables declaration//GEN-END:variables
