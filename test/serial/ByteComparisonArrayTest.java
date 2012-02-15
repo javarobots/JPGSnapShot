@@ -4,6 +4,7 @@
  */
 package serial;
 
+import util.data.ByteComparisonArray;
 import org.junit.*;
 import static org.junit.Assert.*;
 

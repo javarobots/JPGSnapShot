@@ -21,7 +21,6 @@ public class JPGCameraModel extends Observable {
     private SerialPort mSerialPort;
     private CommandHandler mCommandHandler;
     private JLabel mImageLabel;
-    private int mFileSizeToRead;
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -51,14 +50,6 @@ public class JPGCameraModel extends Observable {
         return mCommandHandler;
     }
 
-    public int getFileSizeToRead() {
-        return mFileSizeToRead;
-    }
-
-    public void setFileSizeToRead(int fileSizeToRead) {
-        mFileSizeToRead = fileSizeToRead;
-    }
-
     public JLabel getImageLabel() {
         return mImageLabel;
     }
@@ -66,7 +57,5 @@ public class JPGCameraModel extends Observable {
     public void setImageLabel(JLabel imageLabel) {
         mImageLabel = imageLabel;
     }
-
-
 
 }

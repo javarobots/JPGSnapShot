@@ -99,7 +99,7 @@ public class CommandHandler {
             } catch (InterruptedException ex) {
                 Logger.getLogger(CommandHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(serial.SerialDataListener.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(util.data.SerialDataListener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

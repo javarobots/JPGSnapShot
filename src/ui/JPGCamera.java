@@ -1,9 +1,15 @@
 package ui;
 
 import commonutilities.swing.ComponentPosition;
+import java.awt.Toolkit;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -20,8 +26,15 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                //Set the look and feel to Nimbus
+                try {
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(JPGCamera.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 JPGCamera camera = new JPGCamera();
                 ComponentPosition.centerFrame(camera);
+                camera.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("resources/cameraImage.png")));
                 camera.setVisible(true);
             }
         });
