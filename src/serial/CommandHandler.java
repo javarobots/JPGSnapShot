@@ -78,8 +78,12 @@ public class CommandHandler {
                             mFileSize--;
                         }
                         if (mFileSize == 0){
-                            ImageIcon image = new ImageIcon(mImageDataArray);
-                            mModel.getImageLabel().setIcon(image);
+                            try {
+                                ImageIcon image = new ImageIcon(mImageDataArray);
+                                mModel.getImageLabel().setIcon(image);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     } else if (mCurrentCommand == CameraCommand.RESET){
                         System.out.print(new String(buffer,0,bytesRead));
