@@ -27,22 +27,27 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="mComPortLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="mComPortComboBox" min="-2" pref="75" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="mOpenPortButton" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="mComPortLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="mComPortComboBox" min="-2" pref="75" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="mOpenPortButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="mResetButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="mTakePictureButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="mReadFileSizeButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="mReadFileContentButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="mGetImageDimensionButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="mReadImageDataButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="mImageLabel" min="-2" pref="325" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="mResetButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="mTakePictureButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="mReadFileSizeButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="mReadFileContentButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="mGetImageDimensionButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="mReadImageDataButton" linkSize="1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jProgressBar1" alignment="0" min="-2" pref="537" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jLabel1" pref="479" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,7 +58,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                      <Component id="jLabel1" max="32767" attributes="0"/>
+                      <Component id="mImageLabel" min="-2" pref="245" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -73,10 +78,11 @@
                       <Component id="mGetImageDimensionButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="mReadImageDataButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="268" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -150,10 +156,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mReadImageDataButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="mImageLabel">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="verticalAlignment" type="int" value="1"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JProgressBar" name="jProgressBar1">
     </Component>
   </SubComponents>
 </Form>

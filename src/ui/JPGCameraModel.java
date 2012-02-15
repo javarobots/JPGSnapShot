@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import serial.CommandHandler;
 import util.rxtx.RxTxUtilities;
 
@@ -19,6 +20,7 @@ public class JPGCameraModel extends Observable {
     private List<String> mAvailablePorts;
     private SerialPort mSerialPort;
     private CommandHandler mCommandHandler;
+    private JLabel mImageLabel;
     private int mFileSizeToRead;
 
     public void initModel(){
@@ -56,6 +58,15 @@ public class JPGCameraModel extends Observable {
     public void setFileSizeToRead(int fileSizeToRead) {
         mFileSizeToRead = fileSizeToRead;
     }
+
+    public JLabel getImageLabel() {
+        return mImageLabel;
+    }
+
+    public void setImageLabel(JLabel imageLabel) {
+        mImageLabel = imageLabel;
+    }
+
 
 
 }

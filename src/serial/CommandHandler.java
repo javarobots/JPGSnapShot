@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import ui.JPGCameraModel;
 
 /**
@@ -52,6 +53,7 @@ public class CommandHandler {
         private InputStream mInStream;
         private int byteIndex = 0;
         private int mFileSize = 0;
+        private byte[] mImageDataArray;
 
         public SerialDataListener(InputStream inStream){
             mInStream = inStream;
@@ -68,17 +70,16 @@ public class CommandHandler {
                     if (mCurrentCommand == CameraCommand.SIZE){
                         String[] splitString = (new String(buffer,0,bytesRead)).split(" ");
                         mFileSize = Integer.parseInt(splitString[0]);
+                        mImageDataArray = new byte[mFileSize];
                         System.out.print(new String(buffer,0,bytesRead));
                     } else if (mCurrentCommand == CameraCommand.READ){
-                        if (mFileSize != 0){
-                            for (int i = 0; i < bytesRead; i++){
-                                mFileSize--;
-                                System.out.print(buffer[i] + ",");
-                                if (++byteIndex == 40){
-                                    System.out.println("\nBytes remaining: " + mFileSize);
-                                    byteIndex = 0;
-                                }
-                            }
+                        for (int i = 0; i < bytesRead; i++){
+                            mImageDataArray[mImageDataArray.length - mFileSize] = buffer[i];
+                            mFileSize--;
+                        }
+                        if (mFileSize == 0){
+                            ImageIcon image = new ImageIcon(mImageDataArray);
+                            mModel.getImageLabel().setIcon(image);
                         }
                     } else if (mCurrentCommand == CameraCommand.RESET){
                         System.out.print(new String(buffer,0,bytesRead));
