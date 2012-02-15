@@ -8,6 +8,7 @@ import java.util.TooManyListenersException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import serial.CommandHandler;
 import util.rxtx.RxTxUtilities;
 
@@ -21,6 +22,7 @@ public class JPGCameraModel extends Observable {
     private SerialPort mSerialPort;
     private CommandHandler mCommandHandler;
     private JLabel mImageLabel;
+    private JProgressBar mProgressBar;
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -57,5 +59,15 @@ public class JPGCameraModel extends Observable {
     public void setImageLabel(JLabel imageLabel) {
         mImageLabel = imageLabel;
     }
+
+    public JProgressBar getProgressBar() {
+        return mProgressBar;
+    }
+
+    public void setProgressBar(JProgressBar progressBar) {
+        mProgressBar = progressBar;
+    }
+
+
 
 }

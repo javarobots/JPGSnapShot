@@ -70,11 +70,14 @@ public class CommandHandler {
                     if (mCurrentCommand == CameraCommand.SIZE){
                         String[] splitString = (new String(buffer,0,bytesRead)).split(" ");
                         mFileSize = Integer.parseInt(splitString[0]);
+                        mModel.getProgressBar().setMaximum(mFileSize);
+                        mModel.getProgressBar().setValue(0);
                         mImageDataArray = new byte[mFileSize];
                         System.out.print(new String(buffer,0,bytesRead));
                     } else if (mCurrentCommand == CameraCommand.READ){
                         for (int i = 0; i < bytesRead; i++){
                             mImageDataArray[mImageDataArray.length - mFileSize] = buffer[i];
+                            mModel.getProgressBar().setValue(mModel.getProgressBar().getValue() + 1);
                             mFileSize--;
                         }
                         if (mFileSize == 0){

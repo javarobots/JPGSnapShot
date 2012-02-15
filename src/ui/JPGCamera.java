@@ -47,6 +47,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
 
         JPGCameraModel model = new JPGCameraModel();
         model.setImageLabel(mImageLabel);
+        model.setProgressBar(jProgressBar1);
         model.addObserver(this);
         model.initModel();
         model.notifyObservers();
