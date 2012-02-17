@@ -71,7 +71,10 @@ void evaluateData(){
     while (jpglen != 0) {
       // read 64 bytes at a time;
       uint8_t *buffer;
-      uint8_t bytesToRead = min(32, jpglen);   // change 32 to 64 for a speedup but may not work with all setups!
+      
+      //Changing the chunk size to 16 bytes prevents corrupt images.
+      
+      uint8_t bytesToRead = min(16, jpglen);   // change 32 to 64 for a speedup but may not work with all setups!
       buffer = camera.readPicture(bytesToRead);
       Serial.write(buffer, bytesToRead);
       //Serial.print("Read ");  Serial.print(bytesToRead, DEC); Serial.println(" bytes");
