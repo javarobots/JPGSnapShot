@@ -46,6 +46,11 @@
                       <Component id="mImageLabel" min="-2" pref="325" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jProgressBar1" alignment="0" min="-2" pref="537" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="mPanLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="mPanSlider" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -82,7 +87,12 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="mPanSlider" max="32767" attributes="0"/>
+                  <Component id="mPanLabel" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace pref="127" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -163,6 +173,21 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+    </Component>
+    <Component class="javax.swing.JLabel" name="mPanLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Camera Pan:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSlider" name="mPanSlider">
+      <Properties>
+        <Property name="maximum" type="int" value="1750"/>
+        <Property name="minimum" type="int" value="1250"/>
+        <Property name="value" type="int" value="1500"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mPanSliderStateChanged"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

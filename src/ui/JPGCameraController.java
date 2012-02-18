@@ -43,4 +43,8 @@ class JPGCameraController {
         mModel.getCommandHandler().sendCommand(CameraCommand.READ);
     }
 
+    void panCamera(int panValue){
+
+    }
+
 }

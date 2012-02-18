@@ -1,15 +1,25 @@
+#include <Servo.h>
 #include <VC0706.h>
 #include <SoftwareSerial.h>
 
+
+
 SoftwareSerial cameraConnection = SoftwareSerial(3,2);
 VC0706 camera = VC0706(&cameraConnection);
+Servo panServo;
+Servo tiltServo;
 
-int dataIn[4];
+const int DATA_BYTES = 6;
+int dataIn[DATA_BYTES];
 int dataIndex = 0;
 
 void setup(){
   Serial.begin(38400);
-  camera.begin();  
+  camera.begin();
+  panServo.attach(13);
+  panServo.writeMicroseconds(1500);
+  tiltServo.attach(12);
+  tiltServo.writeMicroseconds(1500);
 }
 
 void loop(){
@@ -20,7 +30,7 @@ void loop(){
       //Increment the array index
       dataIndex++;
       //Reset the array index
-      if (dataIndex == 4){
+      if (dataIndex == DATA_BYTES){
         dataIndex = 0;
         //Compare the data array
         evaluateData();

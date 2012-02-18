@@ -35,13 +35,27 @@ public class CommandHandler {
     }
 
     public void sendCommand(CameraCommand command){
+        mCurrentCommand = command;
+        transmitCommand(command.getCommand());
+    }
+
+    public void sendCommand(byte[] command){
+        if (command[0] == 0x24 && command[1] == 0x54 && command[2] == 0x4C && command[3] == 0x54){
+            //Tilt
+            mCurrentCommand = CameraCommand.TILT;
+        } else if (command[0] == 0x24 && command[1] == 0x50 && command[2] == 0x41 && command[3] == 0x4E){
+            //Pan
+            mCurrentCommand = CameraCommand.PAN;
+        }
+    }
+
+    private void transmitCommand(byte[] command){
         try {
             //Get output stream
             if (mOutStream == null){
                 mOutStream = mPort.getOutputStream();
             }
-            mCurrentCommand = command;
-            mOutStream.write(command.getCommand());
+            mOutStream.write(command);
         } catch (IOException ex) {
             Logger.getLogger(CommandHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

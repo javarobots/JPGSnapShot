@@ -76,6 +76,8 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mReadImageDataButton = new javax.swing.JButton();
         mImageLabel = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        mPanLabel = new javax.swing.JLabel();
+        mPanSlider = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JPG Camera");
@@ -134,6 +136,17 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mImageLabel.setToolTipText("");
         mImageLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        mPanLabel.setText("Camera Pan:");
+
+        mPanSlider.setMaximum(1750);
+        mPanSlider.setMinimum(1250);
+        mPanSlider.setValue(1500);
+        mPanSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mPanSliderStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,7 +170,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                             .addComponent(mReadImageDataButton))
                         .addGap(18, 18, 18)
                         .addComponent(mImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mPanLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mPanSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -190,7 +207,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                         .addComponent(mReadImageDataButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(mPanSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mPanLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,6 +245,10 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mController.readImageData();
     }//GEN-LAST:event_mReadImageDataButtonActionPerformed
 
+    private void mPanSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mPanSliderStateChanged
+
+    }//GEN-LAST:event_mPanSliderStateChanged
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -233,6 +258,8 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton mGetImageDimensionButton;
     private javax.swing.JLabel mImageLabel;
     private javax.swing.JButton mOpenPortButton;
+    private javax.swing.JLabel mPanLabel;
+    private javax.swing.JSlider mPanSlider;
     private javax.swing.JButton mReadFileContentButton;
     private javax.swing.JButton mReadFileSizeButton;
     private javax.swing.JButton mReadImageDataButton;
