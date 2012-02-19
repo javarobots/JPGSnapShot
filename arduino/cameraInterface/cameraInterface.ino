@@ -74,6 +74,10 @@ void evaluateData(){
     if (imgsize == VC0706_320x240) Serial.println("320x240");
     if (imgsize == VC0706_160x120) Serial.println("160x120");
   } else if (dataIn[0] == 0x24 && dataIn[1] == 0x44 && dataIn[2] == 0x41 && dataIn[3] == 0x54){
+    //Read image: Detach servos until done
+    panServo.detach();
+    tiltServo.detach();   
+    
     // Get the size of the image (frame) taken  
     uint16_t jpglen = getFrameLength();
   
@@ -92,6 +96,8 @@ void evaluateData(){
     }
     
     camera.resumeVideo();
+    panServo.attach(13);
+    tiltServo.attach(12);
     
   } else if (dataIn[0] == 0x24 && dataIn[1] == 0x50 && dataIn[2] == 0x41 && dataIn[3] == 0x4E) {
     //Pan command
