@@ -93,6 +93,16 @@ void evaluateData(){
     
     camera.resumeVideo();
     
+  } else if (dataIn[0] == 0x24 && dataIn[1] == 0x50 && dataIn[2] == 0x41 && dataIn[3] == 0x4E) {
+    //Pan command
+    int microseconds = (dataIn[4] * 256) + dataIn[5];
+    panServo.writeMicroseconds(microseconds);
+    
+  } else if (dataIn[0] == 0x24 && dataIn[1] == 0x54 && dataIn[2] == 0x4C && dataIn[3] == 0x54) {
+    //Tilt command
+    int microseconds = (dataIn[4] * 256) + dataIn[5];
+    tiltServo.writeMicroseconds(microseconds);
+    
   }
 }
 
