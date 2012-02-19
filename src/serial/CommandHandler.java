@@ -25,6 +25,8 @@ public class CommandHandler {
     private CameraCommand mCurrentCommand;
     private ImageData mImageData;
     private int mFileSize = 0;
+    private long mStartTime;
+
 
 
     public CommandHandler(SerialPort port, JPGCameraModel model) throws IOException, TooManyListenersException{
@@ -36,6 +38,9 @@ public class CommandHandler {
 
     public void sendCommand(CameraCommand command){
         mCurrentCommand = command;
+        if (command == CameraCommand.READ){
+            mStartTime = System.currentTimeMillis();
+        }
         transmitCommand(command.getCommand());
     }
 
@@ -97,6 +102,7 @@ public class CommandHandler {
                         }
                         if (mFileSize == 0){
                             try {
+                                System.out.println("Time to get image: " + (System.currentTimeMillis() - mStartTime));
                                 ImageIcon image = new ImageIcon(mImageDataArray);
                                 mModel.getImageLabel().setIcon(image);
                             } catch (Exception e){
