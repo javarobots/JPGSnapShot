@@ -192,8 +192,8 @@
     </Component>
     <Component class="javax.swing.JSlider" name="mPanSlider">
       <Properties>
-        <Property name="maximum" type="int" value="1750"/>
-        <Property name="minimum" type="int" value="1250"/>
+        <Property name="maximum" type="int" value="2000"/>
+        <Property name="minimum" type="int" value="1000"/>
         <Property name="value" type="int" value="1500"/>
       </Properties>
       <Events>
@@ -208,7 +208,7 @@
     <Component class="javax.swing.JSlider" name="mTiltSlider">
       <Properties>
         <Property name="maximum" type="int" value="1750"/>
-        <Property name="minimum" type="int" value="1250"/>
+        <Property name="minimum" type="int" value="1000"/>
         <Property name="value" type="int" value="1500"/>
       </Properties>
       <Events>

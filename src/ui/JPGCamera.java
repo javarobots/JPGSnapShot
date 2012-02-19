@@ -140,8 +140,8 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
 
         mPanLabel.setText("Camera Pan:");
 
-        mPanSlider.setMaximum(1750);
-        mPanSlider.setMinimum(1250);
+        mPanSlider.setMaximum(2000);
+        mPanSlider.setMinimum(1000);
         mPanSlider.setValue(1500);
         mPanSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -152,7 +152,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mTiltLabel.setText("Camera Tilt:");
 
         mTiltSlider.setMaximum(1750);
-        mTiltSlider.setMinimum(1250);
+        mTiltSlider.setMinimum(1000);
         mTiltSlider.setValue(1500);
         mTiltSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
