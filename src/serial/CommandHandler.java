@@ -47,6 +47,7 @@ public class CommandHandler {
             //Pan
             mCurrentCommand = CameraCommand.PAN;
         }
+        transmitCommand(command);
     }
 
     private void transmitCommand(byte[] command){

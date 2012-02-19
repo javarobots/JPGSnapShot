@@ -78,6 +78,8 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         jProgressBar1 = new javax.swing.JProgressBar();
         mPanLabel = new javax.swing.JLabel();
         mPanSlider = new javax.swing.JSlider();
+        mTiltLabel = new javax.swing.JLabel();
+        mTiltSlider = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JPG Camera");
@@ -147,6 +149,17 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
             }
         });
 
+        mTiltLabel.setText("Camera Tilt:");
+
+        mTiltSlider.setMaximum(1750);
+        mTiltSlider.setMinimum(1250);
+        mTiltSlider.setValue(1500);
+        mTiltSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mTiltSliderStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,13 +185,19 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                         .addComponent(mImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(mPanLabel)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(mTiltLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mPanLabel, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mPanSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(mTiltSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mPanSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mGetImageDimensionButton, mReadFileContentButton, mReadFileSizeButton, mReadImageDataButton, mResetButton, mTakePictureButton});
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mPanLabel, mTiltLabel});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +230,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mPanSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(mPanLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(mTiltSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mTiltLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();
@@ -246,8 +269,12 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_mReadImageDataButtonActionPerformed
 
     private void mPanSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mPanSliderStateChanged
-
+        mController.panCamera(mPanSlider.getValue());
     }//GEN-LAST:event_mPanSliderStateChanged
+
+    private void mTiltSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mTiltSliderStateChanged
+        mController.tiltCamera(mTiltSlider.getValue());
+    }//GEN-LAST:event_mTiltSliderStateChanged
 
 
 
@@ -265,6 +292,8 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton mReadImageDataButton;
     private javax.swing.JButton mResetButton;
     private javax.swing.JButton mTakePictureButton;
+    private javax.swing.JLabel mTiltLabel;
+    private javax.swing.JSlider mTiltSlider;
     // End of variables declaration//GEN-END:variables
 
     @Override

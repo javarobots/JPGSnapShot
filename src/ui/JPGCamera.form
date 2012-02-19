@@ -47,9 +47,15 @@
                   </Group>
                   <Component id="jProgressBar1" alignment="0" min="-2" pref="537" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="mPanLabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="mTiltLabel" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="mPanLabel" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="mPanSlider" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="mTiltSlider" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="mPanSlider" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -92,7 +98,12 @@
                   <Component id="mPanSlider" max="32767" attributes="0"/>
                   <Component id="mPanLabel" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="127" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="mTiltSlider" max="32767" attributes="0"/>
+                  <Component id="mTiltLabel" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace pref="98" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -187,6 +198,21 @@
       </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mPanSliderStateChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="mTiltLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Camera Tilt:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSlider" name="mTiltSlider">
+      <Properties>
+        <Property name="maximum" type="int" value="1750"/>
+        <Property name="minimum" type="int" value="1250"/>
+        <Property name="value" type="int" value="1500"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="mTiltSliderStateChanged"/>
       </Events>
     </Component>
   </SubComponents>

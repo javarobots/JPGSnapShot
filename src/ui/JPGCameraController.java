@@ -44,7 +44,21 @@ class JPGCameraController {
     }
 
     void panCamera(int panValue){
+        int highByte = panValue / 256;
+        int lowByte = panValue % 256;
+        byte[] command = CameraCommand.PAN.getCommand();
+        command[4] = (byte) highByte;
+        command[5] = (byte) lowByte;
+        mModel.getCommandHandler().sendCommand(command);
+    }
 
+    void tiltCamera(int tiltValue) {
+        int highByte = tiltValue / 256;
+        int lowByte = tiltValue % 256;
+        byte[] command = CameraCommand.TILT.getCommand();
+        command[4] = (byte) highByte;
+        command[5] = (byte) lowByte;
+        mModel.getCommandHandler().sendCommand(command);
     }
 
 }
