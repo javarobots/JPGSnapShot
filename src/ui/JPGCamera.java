@@ -77,10 +77,10 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mTiltSlider = new javax.swing.JSlider();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        mCommandMenu = new javax.swing.JMenu();
+        mResetMenuItem = new javax.swing.JMenuItem();
+        mDimensionMenuItem = new javax.swing.JMenuItem();
+        mVersionMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JPG Camera");
@@ -129,33 +129,33 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Commands");
+        mCommandMenu.setText("Commands");
 
-        jMenuItem1.setText("Reset");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        mResetMenuItem.setText("Reset");
+        mResetMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                mResetMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        mCommandMenu.add(mResetMenuItem);
 
-        jMenuItem3.setText("Image Dimension");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        mDimensionMenuItem.setText("Image Dimension");
+        mDimensionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                mDimensionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        mCommandMenu.add(mDimensionMenuItem);
 
-        jMenuItem2.setText("Version");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        mVersionMenuItem.setText("Version");
+        mVersionMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                mVersionMenuItemActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        mCommandMenu.add(mVersionMenuItem);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(mCommandMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -238,37 +238,37 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mController.tiltCamera(mTiltSlider.getValue());
     }//GEN-LAST:event_mTiltSliderStateChanged
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void mResetMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mResetMenuItemActionPerformed
         mController.resetCamera();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_mResetMenuItemActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void mDimensionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mDimensionMenuItemActionPerformed
         mController.getDimension();
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_mDimensionMenuItemActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void mVersionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mVersionMenuItemActionPerformed
         mController.getVersion();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_mVersionMenuItemActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JComboBox mComPortComboBox;
     private javax.swing.JLabel mComPortLabel;
+    private javax.swing.JMenu mCommandMenu;
+    private javax.swing.JMenuItem mDimensionMenuItem;
     private javax.swing.JLabel mImageLabel;
     private javax.swing.JButton mOpenPortButton;
     private javax.swing.JLabel mPanLabel;
     private javax.swing.JSlider mPanSlider;
+    private javax.swing.JMenuItem mResetMenuItem;
     private javax.swing.JButton mTakePictureButton;
     private javax.swing.JLabel mTiltLabel;
     private javax.swing.JSlider mTiltSlider;
+    private javax.swing.JMenuItem mVersionMenuItem;
     // End of variables declaration//GEN-END:variables
 
     @Override
