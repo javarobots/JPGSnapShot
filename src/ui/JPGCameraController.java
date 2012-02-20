@@ -1,13 +1,14 @@
 package ui;
 
 import serial.CameraCommand;
+import serial.OneClickSnapShotWorker;
 import util.rxtx.RxTxUtilities;
 
 /**
  *
  * @author Parham
  */
-class JPGCameraController {
+public class JPGCameraController {
 
     private JPGCameraModel mModel;
 
@@ -19,31 +20,31 @@ class JPGCameraController {
         mModel.setSerialPort(RxTxUtilities.openPortByName(portName, 38400));
     }
 
-    void resetCamera() {
+    public void resetCamera() {
         mModel.getCommandHandler().sendCommand(CameraCommand.RESET);
     }
 
-    void takePicture() {
+    public void takePicture() {
         mModel.getCommandHandler().sendCommand(CameraCommand.TAKE);
     }
 
-    void getImageSize() {
+    public void getImageSize() {
         mModel.getCommandHandler().sendCommand(CameraCommand.SIZE);
     }
 
-    void getVersion() {
+    public void getVersion() {
         mModel.getCommandHandler().sendCommand(CameraCommand.VERSION);
     }
 
-    void getDimension() {
+    public void getDimension() {
         mModel.getCommandHandler().sendCommand(CameraCommand.DIMENSION);
     }
 
-    void readImageData() {
+    public void readImageData() {
         mModel.getCommandHandler().sendCommand(CameraCommand.READ);
     }
 
-    void panCamera(int panValue){
+    public void panCamera(int panValue){
         int highByte = panValue / 256;
         int lowByte = panValue % 256;
         byte[] command = CameraCommand.PAN.getCommand();
@@ -52,13 +53,18 @@ class JPGCameraController {
         mModel.getCommandHandler().sendCommand(command);
     }
 
-    void tiltCamera(int tiltValue) {
+    public void tiltCamera(int tiltValue) {
         int highByte = tiltValue / 256;
         int lowByte = tiltValue % 256;
         byte[] command = CameraCommand.TILT.getCommand();
         command[4] = (byte) highByte;
         command[5] = (byte) lowByte;
         mModel.getCommandHandler().sendCommand(command);
+    }
+
+    public void oneClickShot(){
+        OneClickSnapShotWorker worker = new OneClickSnapShotWorker(this);
+        worker.execute();
     }
 
 }
