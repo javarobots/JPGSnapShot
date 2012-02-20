@@ -84,7 +84,7 @@ public class CommandHandler {
             try {
                 //Delay to ensure the response buffer can fill
                 System.out.println(mCurrentCommand.getName() + " command");
-                Thread.sleep(10);
+                Thread.sleep(250);
                 int bytesRead = mInStream.read(buffer);
                 while(bytesRead > 0){
                     if (mCurrentCommand == CameraCommand.SIZE){

@@ -249,7 +249,15 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_mResetButtonActionPerformed
 
     private void mTakePictureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mTakePictureButtonActionPerformed
-        mController.takePicture();
+        try {
+            mController.takePicture();
+            Thread.sleep(1000);
+            mController.getImageSize();
+            Thread.sleep(1000);
+            mController.readImageData();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(JPGCamera.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_mTakePictureButtonActionPerformed
 
     private void mReadFileSizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mReadFileSizeButtonActionPerformed
