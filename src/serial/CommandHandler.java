@@ -23,8 +23,6 @@ public class CommandHandler {
     private JPGCameraModel mModel;
     private byte[] buffer = new byte[1024];
     private CameraCommand mCurrentCommand;
-    private ImageData mImageData;
-    private int mFileSize = 0;
     private long mStartTime;
 
 
@@ -33,7 +31,6 @@ public class CommandHandler {
         mPort = port;
         mPort.addEventListener(new SerialDataListener(port.getInputStream()));
         mModel = model;
-        mImageData = new ImageData();
     }
 
     public void sendCommand(CameraCommand command){

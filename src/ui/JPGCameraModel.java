@@ -23,6 +23,7 @@ public class JPGCameraModel extends Observable {
     private CommandHandler mCommandHandler;
     private JLabel mImageLabel;
     private JProgressBar mProgressBar;
+    private byte[] mImageData;
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -67,6 +68,15 @@ public class JPGCameraModel extends Observable {
     public void setProgressBar(JProgressBar progressBar) {
         mProgressBar = progressBar;
     }
+
+    public byte[] getImageData() {
+        return mImageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        mImageData = imageData;
+    }
+
 
 
 
