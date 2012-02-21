@@ -24,6 +24,7 @@ public class JPGCameraModel extends Observable {
     private JLabel mImageLabel;
     private JProgressBar mProgressBar;
     private byte[] mImageData;
+    private long mImageProcessingTime;
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -77,7 +78,12 @@ public class JPGCameraModel extends Observable {
         mImageData = imageData;
     }
 
+    public long getImageProcessingTime() {
+        return mImageProcessingTime;
+    }
 
-
+    public void setImageProcessingTime(long imageProcessingTime) {
+        mImageProcessingTime = imageProcessingTime;
+    }
 
 }

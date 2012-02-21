@@ -99,7 +99,10 @@ public class CommandHandler {
                         }
                         if (mFileSize == 0){
                             try {
-                                System.out.println("Time to get image: " + (System.currentTimeMillis() - mStartTime));
+                                mModel.setImageProcessingTime((System.currentTimeMillis() - mStartTime));
+                                //Update the model with current image data
+                                mModel.setImageData(mImageDataArray);
+                                //Create the image for the label
                                 ImageIcon image = new ImageIcon(mImageDataArray);
                                 mModel.getImageLabel().setIcon(image);
                             } catch (Exception e){
