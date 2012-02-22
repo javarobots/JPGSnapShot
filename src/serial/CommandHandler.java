@@ -104,6 +104,7 @@ public class CommandHandler {
                                 //Create the image for the label
                                 ImageIcon image = new ImageIcon(mImageDataArray);
                                 mModel.getImageLabel().setIcon(image);
+                                mModel.notifyObservers();
                             } catch (Exception e){
                                 e.printStackTrace();
                             }

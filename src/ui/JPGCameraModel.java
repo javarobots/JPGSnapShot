@@ -1,6 +1,7 @@
 package ui;
 
 import gnu.io.SerialPort;
+import java.awt.Component;
 import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
@@ -18,13 +19,18 @@ import util.rxtx.RxTxUtilities;
  */
 public class JPGCameraModel extends Observable {
 
+    private Component mParentComponent;
     private List<String> mAvailablePorts;
     private SerialPort mSerialPort;
     private CommandHandler mCommandHandler;
     private JLabel mImageLabel;
     private JProgressBar mProgressBar;
     private byte[] mImageData;
-    private long mImageProcessingTime;
+    private long mImageProcessingTime = 0;
+
+    public JPGCameraModel(Component parentComponent){
+        mParentComponent = parentComponent;
+    }
 
     public void initModel(){
         mAvailablePorts = RxTxUtilities.getAvailablePorts();
@@ -84,6 +90,12 @@ public class JPGCameraModel extends Observable {
 
     public void setImageProcessingTime(long imageProcessingTime) {
         mImageProcessingTime = imageProcessingTime;
+        setChanged();
     }
+
+    public Component getParentComponent() {
+        return mParentComponent;
+    }
+
 
 }

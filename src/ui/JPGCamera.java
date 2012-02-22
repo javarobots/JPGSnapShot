@@ -17,6 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class JPGCamera extends javax.swing.JFrame implements Observer {
 
     private JPGCameraController mController;
+    private boolean mPortArraySet = false;
 
     /**
     * @param args the command line arguments
@@ -44,7 +45,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     public JPGCamera() {
         initComponents();
 
-        JPGCameraModel model = new JPGCameraModel();
+        JPGCameraModel model = new JPGCameraModel(this);
         model.setImageLabel(mImageLabel);
         model.setProgressBar(mImageTransferProgressBar);
         model.addObserver(this);
@@ -76,8 +77,10 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mTiltLabel = new javax.swing.JLabel();
         mTiltSlider = new javax.swing.JSlider();
         mPanTiltHomeButton = new javax.swing.JButton();
+        mTimeToGetLabel = new javax.swing.JLabel();
         mMenuBar = new javax.swing.JMenuBar();
         mFileMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mCommandMenu = new javax.swing.JMenu();
         mResetMenuItem = new javax.swing.JMenuItem();
         mDimensionMenuItem = new javax.swing.JMenuItem();
@@ -138,7 +141,18 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
             }
         });
 
+        mTimeToGetLabel.setText("Time to Get Image (ms):");
+
         mFileMenu.setText("File");
+
+        jMenuItem1.setText("Save");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mFileMenu.add(jMenuItem1);
+
         mMenuBar.add(mFileMenu);
 
         mCommandMenu.setText("Commands");
@@ -197,7 +211,10 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(mOpenPortButton))
                             .addComponent(mPanTiltHomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(mTakePictureButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(mTakePictureButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(mTimeToGetLabel)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addComponent(mImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -231,7 +248,9 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                             .addComponent(mTiltSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(mTiltLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mPanTiltHomeButton)))
+                        .addComponent(mPanTiltHomeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mTimeToGetLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -273,9 +292,14 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mTiltSlider.setValue(1575);
     }//GEN-LAST:event_mPanTiltHomeButtonActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        mController.saveFile();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JComboBox mComPortComboBox;
     private javax.swing.JLabel mComPortLabel;
     private javax.swing.JMenu mCommandMenu;
@@ -292,6 +316,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton mTakePictureButton;
     private javax.swing.JLabel mTiltLabel;
     private javax.swing.JSlider mTiltSlider;
+    private javax.swing.JLabel mTimeToGetLabel;
     private javax.swing.JMenuItem mVersionMenuItem;
     // End of variables declaration//GEN-END:variables
 
@@ -299,7 +324,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof JPGCameraModel){
             JPGCameraModel model = (JPGCameraModel) o;
-            mComPortComboBox.setModel(new DefaultComboBoxModel(model.getAvailablePorts().toArray(new String[0])));
+            if (!mPortArraySet){
+                mComPortComboBox.setModel(new DefaultComboBoxModel(model.getAvailablePorts().toArray(new String[0])));
+                mPortArraySet = true;
+            }
+            mTimeToGetLabel.setText("Time to Get Image (ms): " + model.getImageProcessingTime());
         }
     }
 

@@ -1,5 +1,12 @@
 package ui;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import serial.CameraCommand;
 import serial.OneClickSnapShotWorker;
 import util.rxtx.RxTxUtilities;
@@ -65,6 +72,27 @@ public class JPGCameraController {
     public void oneClickShot(){
         OneClickSnapShotWorker worker = new OneClickSnapShotWorker(this);
         worker.execute();
+    }
+
+    void saveFile() {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG Images", "jpg");
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        if (chooser.showSaveDialog(mModel.getParentComponent()) == JFileChooser.APPROVE_OPTION){
+            try {
+                File saveFile = chooser.getSelectedFile();
+                if (!saveFile.getName().endsWith(".jpg") && !saveFile.getName().endsWith(".JPG")){
+                    saveFile = new File(saveFile.getAbsolutePath() + ".jpg");
+                }
+                try (FileOutputStream outStream = new FileOutputStream(saveFile)) {
+                    outStream.write(mModel.getImageData());
+                    outStream.close();
+                }
+            } catch ( IOException ex) {
+                Logger.getLogger(JPGCameraController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }
