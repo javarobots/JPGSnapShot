@@ -17,9 +17,9 @@ void setup(){
   Serial.begin(38400);
   camera.begin();
   panServo.attach(13);
-  panServo.writeMicroseconds(1500);
+  panServo.writeMicroseconds(1400);
   tiltServo.attach(12);
-  tiltServo.writeMicroseconds(1500);
+  tiltServo.writeMicroseconds(1575);
 }
 
 void loop(){
@@ -88,7 +88,7 @@ void evaluateData(){
       
       //Changing the chunk size to 16 bytes prevents corrupt images.
       
-      uint8_t bytesToRead = min(16, jpglen);   // change 32 to 64 for a speedup but may not work with all setups!
+      uint8_t bytesToRead = min(8, jpglen);   // change 32 to 64 for a speedup but may not work with all setups!
       buffer = camera.readPicture(bytesToRead);
       Serial.write(buffer, bytesToRead);
       //Serial.print("Read ");  Serial.print(bytesToRead, DEC); Serial.println(" bytes");

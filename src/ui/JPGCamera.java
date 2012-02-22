@@ -7,7 +7,6 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -47,12 +46,13 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
 
         JPGCameraModel model = new JPGCameraModel();
         model.setImageLabel(mImageLabel);
-        model.setProgressBar(jProgressBar1);
+        model.setProgressBar(mImageTransferProgressBar);
         model.addObserver(this);
         model.initModel();
         model.notifyObservers();
 
         mController = new JPGCameraController(model);
+        mImageLabel.setToolTipText(null);
 
     }
 
@@ -70,13 +70,14 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mTakePictureButton = new javax.swing.JButton();
         mOpenPortButton = new javax.swing.JButton();
         mImageLabel = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        mImageTransferProgressBar = new javax.swing.JProgressBar();
         mPanLabel = new javax.swing.JLabel();
         mPanSlider = new javax.swing.JSlider();
         mTiltLabel = new javax.swing.JLabel();
         mTiltSlider = new javax.swing.JSlider();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        mPanTiltHomeButton = new javax.swing.JButton();
+        mMenuBar = new javax.swing.JMenuBar();
+        mFileMenu = new javax.swing.JMenu();
         mCommandMenu = new javax.swing.JMenu();
         mResetMenuItem = new javax.swing.JMenuItem();
         mDimensionMenuItem = new javax.swing.JMenuItem();
@@ -88,6 +89,7 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mComPortLabel.setText("COM Port:");
 
         mTakePictureButton.setText("Take Picture");
+        mTakePictureButton.setEnabled(false);
         mTakePictureButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mTakePictureButtonActionPerformed(evt);
@@ -103,12 +105,15 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
 
         mImageLabel.setToolTipText("");
         mImageLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        mImageLabel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        mImageTransferProgressBar.setStringPainted(true);
 
         mPanLabel.setText("Camera Pan:");
 
-        mPanSlider.setMaximum(2000);
-        mPanSlider.setMinimum(1000);
-        mPanSlider.setValue(1500);
+        mPanSlider.setMaximum(1900);
+        mPanSlider.setMinimum(900);
+        mPanSlider.setValue(1400);
         mPanSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mPanSliderStateChanged(evt);
@@ -119,15 +124,22 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
 
         mTiltSlider.setMaximum(1750);
         mTiltSlider.setMinimum(1000);
-        mTiltSlider.setValue(1500);
+        mTiltSlider.setValue(1575);
         mTiltSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 mTiltSliderStateChanged(evt);
             }
         });
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        mPanTiltHomeButton.setText("Pan/Tilt to Home");
+        mPanTiltHomeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mPanTiltHomeButtonActionPerformed(evt);
+            }
+        });
+
+        mFileMenu.setText("File");
+        mMenuBar.add(mFileMenu);
 
         mCommandMenu.setText("Commands");
 
@@ -155,9 +167,9 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         });
         mCommandMenu.add(mVersionMenuItem);
 
-        jMenuBar1.add(mCommandMenu);
+        mMenuBar.add(mCommandMenu);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(mMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,26 +179,28 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(mTiltLabel, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mPanLabel, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(mPanSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                            .addComponent(mTiltSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(mImageTransferProgressBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(mComPortLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(mComPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(mOpenPortButton))
-                            .addComponent(mTakePictureButton))
+                            .addComponent(mPanTiltHomeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mTakePictureButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(mImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(mTiltLabel, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mPanLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(mTiltSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mPanSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(mImageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {mPanLabel, mTiltLabel});
@@ -204,19 +218,21 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
                             .addComponent(mComPortLabel)
                             .addComponent(mComPortComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(mOpenPortButton))
-                        .addGap(40, 40, 40)
-                        .addComponent(mTakePictureButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(mPanSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mPanLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(mTiltSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mTiltLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(77, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mTakePictureButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mImageTransferProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(mPanSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mPanLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(mTiltSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mTiltLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mPanTiltHomeButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -224,9 +240,11 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
 
     private void mOpenPortButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mOpenPortButtonActionPerformed
         mController.openComPort(mComPortComboBox.getSelectedItem().toString());
+        mTakePictureButton.setEnabled(true);
     }//GEN-LAST:event_mOpenPortButtonActionPerformed
 
     private void mTakePictureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mTakePictureButtonActionPerformed
+        mImageLabel.setIcon(null);
         mController.oneClickShot();
     }//GEN-LAST:event_mTakePictureButtonActionPerformed
 
@@ -250,20 +268,26 @@ public class JPGCamera extends javax.swing.JFrame implements Observer {
         mController.getVersion();
     }//GEN-LAST:event_mVersionMenuItemActionPerformed
 
+    private void mPanTiltHomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mPanTiltHomeButtonActionPerformed
+        mPanSlider.setValue(1400);
+        mTiltSlider.setValue(1575);
+    }//GEN-LAST:event_mPanTiltHomeButtonActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JComboBox mComPortComboBox;
     private javax.swing.JLabel mComPortLabel;
     private javax.swing.JMenu mCommandMenu;
     private javax.swing.JMenuItem mDimensionMenuItem;
+    private javax.swing.JMenu mFileMenu;
     private javax.swing.JLabel mImageLabel;
+    private javax.swing.JProgressBar mImageTransferProgressBar;
+    private javax.swing.JMenuBar mMenuBar;
     private javax.swing.JButton mOpenPortButton;
     private javax.swing.JLabel mPanLabel;
     private javax.swing.JSlider mPanSlider;
+    private javax.swing.JButton mPanTiltHomeButton;
     private javax.swing.JMenuItem mResetMenuItem;
     private javax.swing.JButton mTakePictureButton;
     private javax.swing.JLabel mTiltLabel;

@@ -80,8 +80,7 @@ public class CommandHandler {
         public void serialEvent(SerialPortEvent spe) {
             try {
                 //Delay to ensure the response buffer can fill
-                System.out.println(mCurrentCommand.getName() + " command");
-                Thread.sleep(250);
+                Thread.sleep(100);
                 int bytesRead = mInStream.read(buffer);
                 while(bytesRead > 0){
                     if (mCurrentCommand == CameraCommand.SIZE){
@@ -123,7 +122,7 @@ public class CommandHandler {
             } catch (InterruptedException ex) {
                 Logger.getLogger(CommandHandler.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(util.data.SerialDataListener.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SerialDataListener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

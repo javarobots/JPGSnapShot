@@ -41,7 +41,6 @@ public class ByteComparisonArrayTest {
      */
     @Test
     public void testAddByte() {
-        System.out.println("addByte");
         for (byte b = 5; b > 0; b--){
             instance.addByte(b);
         }
@@ -53,7 +52,6 @@ public class ByteComparisonArrayTest {
      */
     @Test
     public void testCcompareArray() {
-        System.out.println("compareArray");
         for (byte b = 5; b > 0; b--){
             instance.addByte(b);
         }
