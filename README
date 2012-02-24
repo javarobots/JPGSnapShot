@@ -1,3 +1,4 @@
 This application uses an Arduino uC as the serial interface to a Sparkfun SEN-10061
-TTL camera. The Java program sends commands to the camera through the Arduino uC
-and displays the captured JPG image in the GUI.
+TTL camera. The Java program sends commands to the Arduino uC and displays the
+captured JPG image in the GUI. Two servos are utilized for pan and tilt and are
+also controlled from the user interface.
